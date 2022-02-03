@@ -47,7 +47,7 @@ videoFullTitle=$(ls "$videoDirectory" | grep -e "$videoTitle")
 [[ -f "$videoDirectory/$videoTitle.mp4" ]] || ffmpeg -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4"
 
 # Move the MP4 video file to the Downloads folder.
-/bin/mv "$videoDirectory/$videoTitle.mp4" "$downloadsFolder"
+/bin/mv "$videoDirectory/$videoTitle.mp4" "$downloadsFolder/"
 
 # Remove the directory with any undeleted files.
 /bin/rm -dr "$videoDirectory"
