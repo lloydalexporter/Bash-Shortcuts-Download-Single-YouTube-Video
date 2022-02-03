@@ -47,7 +47,7 @@ videoFullTitle=$(ls "$videoDirectory" | grep -e "$videoTitle")
 # test -f "$videoDirectory/$videoTitle.mp4" || '/opt/homebrew/bin/ffmpeg' -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" & wait
 if [[ $(ls $videoDirectory | grep -E "m4a|webm" | wc -l) -eq 2 ]]; then
     echo "It's an M4A and WEBM download."
-    '/opt/homebrew/bin/ffmpeg' -i "$(ls '$videoDirectory' | grep 'm4a')" -i "$(ls '$videoDirectory' | grep 'webm')" "$videoDirectory/$videoTitle.mp4" & wait
+    '/opt/homebrew/bin/ffmpeg' -i "$(ls /"$videoDirectory/" | grep 'm4a')" -i "$(ls /"$videoDirectory/" | grep 'webm')" "$videoDirectory/$videoTitle.mp4" & wait
 elif [[ ! -f "$videoDirectory/$videoTitle.mp4" ]]; then
     '/opt/homebrew/bin/ffmpeg' -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" & wait
 fi
