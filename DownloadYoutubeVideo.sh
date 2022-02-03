@@ -34,33 +34,23 @@ videoTitle=$(echo $videoTitle | sed 's/["/]//g')
 downloadsFolder="/Users/$(whoami)/Downloads"
 videoDirectory="$downloadsFolder/$videoTitle"
 
-echo "Downloading the YT video"
 # Download the youtube video.
 $('/opt/homebrew/bin/youtube-dl' -k -f bestvideo+bestaudio "$videoURL" -o "$videoDirectory/$videoTitle.%(ext)s") & wait
 
-/bin/sleep 3 && echo "Getting the video title"
 # Get the videos full title.
 videoFullTitle=$(ls "$videoDirectory" | grep -e "$videoTitle")
 
-/bin/sleep 3 && echo "converting"
 # Check if the video is already an MP4 file, if not then convert it to one.
-# test -f "$videoDirectory/$videoTitle.mp4" || '/opt/homebrew/bin/ffmpeg' -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" & wait
 if test $(ls "$videoDirectory" | grep -E "m4a|webm" | wc -l) -eq 2 ; then
-    echo "It's an M4A and WEBM download."
     '/opt/homebrew/bin/ffmpeg' -i "$videoDirectory/$(ls "$videoDirectory" | grep 'm4a')" -i "$videoDirectory/$(ls "$videoDirectory" | grep 'webm')" "$videoDirectory/$videoTitle.mp4" & wait
 elif [[ -f "$videoDirectory/$videoTitle.mp4" ]]; then
-    echo "Already an MP4"
+    var=
 else
-    echo "Else"
     '/opt/homebrew/bin/ffmpeg' -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" & wait
 fi
 
-/bin/sleep 3 && echo "moving"
 # Move the MP4 video file to the Downloads folder.
 /bin/mv "$videoDirectory/$videoTitle.mp4" "$downloadsFolder/$videoTitle.mp4" & wait
 
-echo "removing"
 # Remove the directory with any undeleted files.
 /bin/rm -dr "$videoDirectory" & wait
-
-echo "Done"
