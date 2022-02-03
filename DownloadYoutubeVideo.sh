@@ -30,7 +30,7 @@ fi
 
 
 # Get video title and format it.
-videoTitle=$(youtube-dl -f bestvideo+bestaudio "$videoURL" -o "%(title)s.%(ext)s" --get-title)
+videoTitle=$(/opt/homebrew/bin/youtube-dl -f bestvideo+bestaudio "$videoURL" -o "%(title)s.%(ext)s" --get-title)
 videoTitle=$(echo $videoTitle | sed 's/["/]//g')
 
 # Set videoDownload Directory.
@@ -41,7 +41,7 @@ videoDirectory="$downloadsFolder/$videoTitle"
 cd $downloadsFolder
 
 # Download the youtube video.
-youtube-dl -f bestvideo+bestaudio "$videoURL" -o "$videoDirectory/$videoTitle.%(ext)s"
+/opt/homebrew/bin/youtube-dl -f bestvideo+bestaudio "$videoURL" -o "$videoDirectory/$videoTitle.%(ext)s"
 
 # Get the videos full title.
 videoFullTitle=$(ls "$videoDirectory" | grep -e "$videoTitle")
