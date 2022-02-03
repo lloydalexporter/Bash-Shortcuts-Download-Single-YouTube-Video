@@ -38,7 +38,7 @@ videoDirectory="$downloadsFolder/$videoTitle"
 
 /bin/sleep 3 && echo "Downloading the YT video"
 # Download the youtube video.
-/opt/homebrew/bin/youtube-dl -f bestvideo+bestaudio "$videoURL" -o "$videoDirectory/$videoTitle.%(ext)s" & wait
+/opt/homebrew/bin/youtube-dl -f bestvideo+bestaudio "$videoURL" -o "$videoDirectory/$videoTitle.%(ext)s --merge-output-format mp4" & wait
 
 /bin/sleep 3 && echo "Getting the video title"
 # Get the videos full title.
