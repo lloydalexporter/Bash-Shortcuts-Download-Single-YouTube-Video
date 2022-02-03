@@ -44,7 +44,12 @@ videoFullTitle=$(ls "$videoDirectory" | grep -e "$videoTitle")
 
 /bin/sleep 3 && echo "converting"
 # Check if the video is already an MP4 file, if not then convert it to one.
-test -f "$videoDirectory/$videoTitle.mp4" || '/opt/homebrew/bin/ffmpeg' -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" & wait
+# test -f "$videoDirectory/$videoTitle.mp4" || '/opt/homebrew/bin/ffmpeg' -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" & wait
+if [[ -f "$videoDirectory/$videoTitle.f140.m4a" ]] & [[ -f "$videoDirectory/$videoTitle.f315.webm" ]]; then
+    '/opt/homebrew/bin/ffmpeg' -i "$videoDirectory/$videoTitle.f140.m4a" -i "$videoDirectory/$videoTitle.f315.webm" "$videoDirectory/$videoTitle.mp4" & wait
+elif [[ ! -f "$videoDirectory/$videoTitle.mp4" ]]; then
+    '/opt/homebrew/bin/ffmpeg' -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" & wait
+fi
 
 /bin/sleep 3 && echo "moving"
 # Move the MP4 video file to the Downloads folder.
