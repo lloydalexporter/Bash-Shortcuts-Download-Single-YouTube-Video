@@ -45,7 +45,7 @@ videoFullTitle=$(ls "$videoDirectory" | grep -e "$videoTitle")
 /bin/sleep 3 && echo "converting"
 # Check if the video is already an MP4 file, if not then convert it to one.
 # test -f "$videoDirectory/$videoTitle.mp4" || '/opt/homebrew/bin/ffmpeg' -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" & wait
-if [[ $(ls "$videoDirectory" | grep -E "m4a|webm" | wc -l) -eq 2 ]]; then
+if test $(ls "$videoDirectory" | grep -E "m4a|webm" | wc -l) -eq 2 ; then
     echo "It's an M4A and WEBM download."
     '/opt/homebrew/bin/ffmpeg' -i "$(ls /"$videoDirectory/" | grep 'm4a')" -i "$(ls /"$videoDirectory/" | grep 'webm')" "$videoDirectory/$videoTitle.mp4" & wait
 elif [[ -f "$videoDirectory/$videoTitle.mp4" ]]; then
