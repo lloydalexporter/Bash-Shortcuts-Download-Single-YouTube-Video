@@ -35,7 +35,7 @@ videoTitle=$(echo $videoTitle | sed 's/["/]//g')
 
 # Set videoDownload Directory.
 downloadsFolder="/Users/$(whoami)/Downloads"
-videoDirectory="$downloadsFolder/.$videoTitle"
+videoDirectory="$downloadsFolder/$videoTitle"
 
 # Download the youtube video.
 youtube-dl -f bestvideo+bestaudio "$videoURL" -o "$videoDirectory/$videoTitle.%(ext)s"
