@@ -42,7 +42,6 @@ videoDirectory="$downloadsFolder/$videoTitle"
 
 # Download the youtube video.
 /opt/homebrew/bin/youtube-dl -f bestvideo+bestaudio "$videoURL" -o "$videoDirectory/$videoTitle.%(ext)s" &
-
 wait
 
 /bin/sleep 3 && echo "Go"
@@ -53,7 +52,8 @@ videoFullTitle=$(ls "$videoDirectory" | grep -e "$videoTitle")
 /bin/sleep 3 && echo "Go"
 
 # Check if the video is already an MP4 file, if not then convert it to one.
-test -f "$videoDirectory/$videoTitle.mp4" || '/opt/homebrew/bin/ffmpeg' -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4"
+test -f "$videoDirectory/$videoTitle.mp4" || '/opt/homebrew/bin/ffmpeg' -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" &
+wait
 
 /bin/sleep 3 && echo "Go"
 
