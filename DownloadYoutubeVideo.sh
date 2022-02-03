@@ -66,3 +66,7 @@ echo G
 /bin/rm -dr "$videoDirectory"
 
 echo H
+
+
+
+[[ 1 -eq 1 ]] && echo True || echo False
