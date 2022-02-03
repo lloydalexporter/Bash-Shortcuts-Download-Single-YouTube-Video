@@ -43,7 +43,7 @@ videoDirectory="$downloadsFolder/$videoTitle"
 echo C
 
 # Download the youtube video.
-/opt/homebrew/bin/youtube-dl -f bestvideo+bestaudio "$videoURL" -o "$videoDirectory/$videoTitle.%(ext)s"
+$(/opt/homebrew/bin/youtube-dl -f bestvideo+bestaudio "$videoURL" -o "$videoDirectory/$videoTitle.%(ext)s")
 
 echo D
 
