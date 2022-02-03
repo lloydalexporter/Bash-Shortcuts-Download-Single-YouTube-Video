@@ -1,5 +1,5 @@
 # Check if we have any parameter supplied.
-if test $# -eq 0 ; then
+if [ $# -eq 0 ]; then
     # We don't have any parameters supplied: Ask until we do.
     videoURL=
 	while [[ $videoURL == "" ]]
@@ -9,7 +9,7 @@ if test $# -eq 0 ; then
 		videoURL=
 		read -p "" videoURL
         # If the input is a YouTube link, then continue, else we loop again.
-        if test "$videoURL" != *"youtu.be"* | "$videoURL" != *"youtube.com"*
+        if [[ "$videoURL" != *"youtu.be"* ]] | [[ "$videoURL" != *"youtube.com"* ]]
         then
             echo
             echo This URL is not a youtube video.
@@ -20,7 +20,7 @@ else
     # We do have a parameter supplied:
     videoURL="$1"
     # If the input is a YouTube link, then continue, else exit.
-    if test "$videoURL" != *"youtu.be"* | test "$videoURL" != *"youtube.com"*
+    if [[ "$videoURL" != *"youtu.be"* ]] | [[ "$videoURL" != *"youtube.com"* ]]
     then
         echo
         echo Not a youtube video, try again with a correct link.
