@@ -53,11 +53,7 @@ videoFullTitle=$(ls "$videoDirectory" | grep -e "$videoTitle")
 echo E
 
 # Check if the video is already an MP4 file, if not then convert it to one.
-[[ -f "$videoDirectory/$videoTitle.mp4" ]] || { /opt/homebrew/bin/ffmpeg -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" ;} ;
-
-# if [[ -f "$videoDirectory/$videoTitle.mp4" ]]; then
-
-
+test -f "$videoDirectory/$videoTitle.mp4" || /opt/homebrew/bin/ffmpeg -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4"
 
 echo F
 
@@ -72,8 +68,7 @@ echo G
 echo H
 
 
-
-if [[ 1 -eq 1 ]]; then
+if test 1 -eq 1 ; then
     echo True
 else
     echo False
