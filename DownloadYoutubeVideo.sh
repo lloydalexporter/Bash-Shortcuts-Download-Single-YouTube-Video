@@ -55,6 +55,10 @@ echo E
 # Check if the video is already an MP4 file, if not then convert it to one.
 [[ -f "$videoDirectory/$videoTitle.mp4" ]] || { /opt/homebrew/bin/ffmpeg -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" ;} ;
 
+if [[ -f "$videoDirectory/$videoTitle.mp4" ]]; then
+
+
+
 echo F
 
 # Move the MP4 video file to the Downloads folder.
@@ -69,4 +73,8 @@ echo H
 
 
 
-[[ 1 -eq 1 ]] && echo True || echo False
+if [[ 1 -eq 1 ]]; then
+    echo True
+else
+    echo False
+fi
