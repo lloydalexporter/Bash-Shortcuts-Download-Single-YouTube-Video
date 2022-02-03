@@ -54,6 +54,6 @@ test -f "$videoDirectory/$videoTitle.mp4" || echo $('/opt/homebrew/bin/ffmpeg' -
 
 /bin/sleep 3 && echo "removing"
 # Remove the directory with any undeleted files.
-/bin/rm -dr "$videoDirectory" & wait
+# /bin/rm -dr "$videoDirectory" & wait
 
 /bin/sleep 3 && echo "Done"
