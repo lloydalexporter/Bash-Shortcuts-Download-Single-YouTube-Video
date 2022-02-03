@@ -28,29 +28,41 @@ else
     fi
 fi
 
+echo A
 
 # Get video title and format it.
 videoTitle=$(/opt/homebrew/bin/youtube-dl -f bestvideo+bestaudio "$videoURL" -o "%(title)s.%(ext)s" --get-title)
 videoTitle=$(echo $videoTitle | sed 's/["/]//g')
 
+echo B
+
 # Set videoDownload Directory.
 downloadsFolder="/Users/$(whoami)/Downloads"
 videoDirectory="$downloadsFolder/$videoTitle"
 
-# This may work possibly.
-cd $downloadsFolder
+echo C
 
 # Download the youtube video.
 /opt/homebrew/bin/youtube-dl -f bestvideo+bestaudio "$videoURL" -o "$videoDirectory/$videoTitle.%(ext)s"
 
+echo D
+
 # Get the videos full title.
 videoFullTitle=$(ls "$videoDirectory" | grep -e "$videoTitle")
+
+echo E
 
 # Check if the video is already an MP4 file, if not then convert it to one.
 [[ -f "$videoDirectory/$videoTitle.mp4" ]] || /opt/homebrew/bin/ffmpeg -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4"
 
+echo F
+
 # Move the MP4 video file to the Downloads folder.
 /bin/mv "$videoDirectory/$videoTitle.mp4" "$downloadsFolder/"
 
+echo G
+
 # Remove the directory with any undeleted files.
 /bin/rm -dr "$videoDirectory"
+
+echo H
