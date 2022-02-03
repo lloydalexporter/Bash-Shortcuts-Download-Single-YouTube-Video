@@ -38,8 +38,7 @@ videoDirectory="$downloadsFolder/$videoTitle"
 
 /bin/sleep 3 && echo "Downloading the YT video"
 # Download the youtube video.
-/opt/homebrew/bin/youtube-dl -f bestvideo+bestaudio "$videoURL" -o "$videoDirectory/$videoTitle.%(ext)s" &
-wait
+/opt/homebrew/bin/youtube-dl -f bestvideo+bestaudio "$videoURL" -o "$videoDirectory/$videoTitle.%(ext)s" & wait
 
 /bin/sleep 3 && echo "Getting the video title"
 # Get the videos full title.
@@ -47,15 +46,14 @@ videoFullTitle=$(ls "$videoDirectory" | grep -e "$videoTitle")
 
 /bin/sleep 3 && echo "converting"
 # Check if the video is already an MP4 file, if not then convert it to one.
-test -f "$videoDirectory/$videoTitle.mp4" || '/opt/homebrew/bin/ffmpeg' -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" &
-wait
+test -f "$videoDirectory/$videoTitle.mp4" || '/opt/homebrew/bin/ffmpeg' -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" & wait
 
 /bin/sleep 3 && echo "moving"
 # Move the MP4 video file to the Downloads folder.
-/bin/mv "$videoDirectory/$videoTitle.mp4" "$downloadsFolder"
+/bin/mv "$videoDirectory/$videoTitle.mp4" "$downloadsFolder" & wait
 
 /bin/sleep 3 && echo "removing"
 # Remove the directory with any undeleted files.
-/bin/rm -dr "$videoDirectory"
+/bin/rm -dr "$videoDirectory" & wait
 
 /bin/sleep 3 && echo "Done"
