@@ -53,12 +53,12 @@ videoFullTitle=$(ls "$videoDirectory" | grep -e "$videoTitle")
 echo E
 
 # Check if the video is already an MP4 file, if not then convert it to one.
-[[ -f "$videoDirectory/$videoTitle.mp4" ]] || /opt/homebrew/bin/ffmpeg -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4"
+[[ -f "$videoDirectory/$videoTitle.mp4" ]] || { /opt/homebrew/bin/ffmpeg -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" ;} ;
 
 echo F
 
 # Move the MP4 video file to the Downloads folder.
-/bin/mv "$videoDirectory/$videoTitle.mp4" "$downloadsFolder/"
+/bin/mv "$videoDirectory/$videoTitle.mp4" "$downloadsFolder"
 
 echo G
 
