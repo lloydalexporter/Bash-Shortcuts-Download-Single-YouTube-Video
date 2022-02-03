@@ -46,7 +46,7 @@ videoFullTitle=$(ls "$videoDirectory" | grep -e "$videoTitle")
 
 /bin/sleep 3 && echo "converting"
 # Check if the video is already an MP4 file, if not then convert it to one.
-test -f "$videoDirectory/$videoTitle.mp4" || '/opt/homebrew/bin/ffmpeg' -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" & wait
+test -f "$videoDirectory/$videoTitle.mp4" || echo $('/opt/homebrew/bin/ffmpeg' -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4") & wait
 
 /bin/sleep 3 && echo "moving"
 # Move the MP4 video file to the Downloads folder.
