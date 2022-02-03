@@ -41,7 +41,9 @@ videoDirectory="$downloadsFolder/$videoTitle"
 /bin/sleep 3 && echo "Go"
 
 # Download the youtube video.
-/opt/homebrew/bin/youtube-dl -f bestvideo+bestaudio "$videoURL" -o "$videoDirectory/$videoTitle.%(ext)s"
+/opt/homebrew/bin/youtube-dl -f bestvideo+bestaudio "$videoURL" -o "$videoDirectory/$videoTitle.%(ext)s" &
+
+wait
 
 /bin/sleep 3 && echo "Go"
 
