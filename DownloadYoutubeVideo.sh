@@ -41,11 +41,11 @@ $('/opt/homebrew/bin/youtube-dl' -k -f bestvideo+bestaudio "$videoURL" -o "$vide
 videoFullTitle=$(ls "$videoDirectory" | grep -e "$videoTitle")
 
 # Check if the video is already an MP4 file, if not then convert it to one.
-if test $(ls "$videoDirectory" | grep -E "$videoTitle" | wc -l) -eq 2 ; then
+if test $(ls "$videoDirectory" | grep -E "$videoTitle" | wc -l) -eq 2; then
     echo "Two files need combining: $(ls "$videoDirectory" | head -1) and $(ls "$videoDirectory" | tail -1)"
     '/opt/homebrew/bin/ffmpeg' -i "$videoDirectory/$(ls "$videoDirectory" | head -1)" -i "$videoDirectory/$(ls "$videoDirectory" | tail -1)" "$videoDirectory/$videoTitle.mp4" & wait
 elif [[ -f "$videoDirectory/$videoTitle.mp4" ]]; then
-    var=
+    var=''
 else
     '/opt/homebrew/bin/ffmpeg' -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" & wait
 fi
