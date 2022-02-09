@@ -68,6 +68,6 @@ fi
 /bin/mv "$videoDirectory/$videoTitle.mp4" "$downloadsFolder/$videoTitle.mp4" #& wait
 
 # Remove the directory with any undeleted files.
-/bin/rm -dr "$videoDirectory" #& wait
+# /bin/rm -dr "$videoDirectory" #& wait
 
 echo Done
