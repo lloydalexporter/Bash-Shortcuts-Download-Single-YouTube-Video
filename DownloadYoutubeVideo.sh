@@ -8,7 +8,7 @@
 # ! - Constants - ! #
 YouTubeCmd='/opt/homebrew/bin/youtube-dl'
 # ffmpegCmd='/opt/homebrew/bin/ffmpeg'
-ffmpegCmd='/opt/homebrew/Cellar/ffmpeg/*/bin/ffmpeg'
+ffmpegCmd='/opt/homebrew/Cellar/ffmpeg/5.0/bin/ffmpeg'
 downloadsFolder="/Users/$(whoami)/Downloads"
 
 
