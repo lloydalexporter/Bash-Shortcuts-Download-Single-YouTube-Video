@@ -66,6 +66,7 @@ fi
 
 # Move the MP4 video file to the Downloads folder.
 /bin/mv "$videoDirectory/$videoTitle.mp4" "$downloadsFolder" #& wait
+echo "$videoDirectory/$videoTitle.mp4" "$downloadsFolder"
 
 # Remove the directory with any undeleted files.
 # /bin/rm -dr "$videoDirectory" #& wait
