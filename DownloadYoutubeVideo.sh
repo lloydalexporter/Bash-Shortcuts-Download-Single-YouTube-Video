@@ -50,11 +50,6 @@ VideoDownload=$($YouTubeCmd -k -f bestvideo+bestaudio "$videoURL" --no-playlist 
 
 echo 50
 
-# Get the videos full title.
-videoFullTitle=$( ls "$videoDirectory" | grep -e "$videoTitle" )
-
-echo 55
-
 # Check if the video is already an MP4 file, if not then convert it to one.
 if test $( ls "$videoDirectory" | grep -E "$videoTitle" | wc -l ) -eq 2; then
     echo IF
@@ -65,16 +60,15 @@ if test $( ls "$videoDirectory" | grep -E "$videoTitle" | wc -l ) -eq 2; then
 elif [[ -f "$videoDirectory/$videoTitle.mp4" ]]; then
     var=''
 else
+    videoFullTitle=$( ls "$videoDirectory" | grep -e "$videoTitle" )
     "$ffmpegCmd" -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" #& wait
 fi
 
 sleep 1
 
 # Move the MP4 video file to the Downloads folder.
-Temp=$( ls "$videoDirectory" | grep '^[^.]*.[^.]*$' )
-echo $Temp
-
-exit
+videoMP4=$( ls "$videoDirectory" | grep '^[^.]*.[^.]*$' )
+echo $videoMP4
 
 /bin/mv "$videoDirectory/$videoTitle.mp4" "$downloadsFolder" #& wait
 echo "$videoDirectory/$videoTitle.mp4" "$downloadsFolder"
