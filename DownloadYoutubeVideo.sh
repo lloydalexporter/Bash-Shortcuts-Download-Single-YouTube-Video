@@ -40,15 +40,13 @@ videoTitle=$(echo $videoTitle | sed 's/["/]//g')
 videoTitle=$(echo $videoTitle | sed "s/[']//g")
 
 
-# Set videoDownload Directory.
+# Set video directory.
 videoDirectory="$downloadsFolder/$videoTitle"
 
 echo 45
 
 # Download the youtube video.
-$("$YouTubeCmd" -f bestvideo+bestaudio "$videoURL" --no-playlist -o "$videoDirectory/$videoTitle.%(ext)s" --recode-video mp4) #& wait
-
-exit
+VideoDownload=$( "$YouTubeCmd" -f bestvideo+bestaudio "$videoURL" --no-playlist -o "$videoDirectory/$videoTitle.%(ext)s" ) #& wait
 
 echo 50
 
