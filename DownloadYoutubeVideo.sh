@@ -1,3 +1,14 @@
+# ! - Constants - ! #
+ytdlCmd='/opt/homebrew/bin/youtube-dl'
+
+# ! - Variables - ! #
+
+
+
+# Check if Youtube-DL is installed.
+[[ -f "$ytdlCmd" ]] && { printf "\nYouTube-DL needs to be installed for this script to run.\nVisit \"https://formulae.brew.sh/formula/youtube-dl\" for more info.\n\n"; exit; }
+
+
 # Check if we have any parameter supplied.
 if [ $# -eq 0 ]; then
     # We don't have any parameters supplied: Ask until we do.
