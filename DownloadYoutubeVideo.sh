@@ -55,7 +55,7 @@ if test $( ls "$videoDirectory" | grep -E "$videoTitle" | wc -l ) -eq 2; then
     echo IF
     fileA=$( ls "$videoDirectory" | head -1 ) # Get the name of the first file.
     fileB=$( ls "$videoDirectory" | tail -1 ) # Get the name of the second file.
-    # echo "Two files need combining: $fileA and $fileB"
+    echo "Two files need combining: $fileA and $fileB"
     $ffmpegCmd -i "$videoDirectory/$fileA" -i "$videoDirectory/$fileB" "$videoDirectory/$videoTitle.mp4" #& wait
 elif [[ -f "$videoDirectory/$videoTitle.mp4" ]]; then
     var=''
