@@ -1,12 +1,20 @@
+#!/bin/bash
+
+# Script for downloading youtube videos, meant for use with Siri Shortcuts.
+
+
+
 # ! - Constants - ! #
-ytdlCmd='/opt/homebrew/bin/youtube-dl'
+YouTubeCmd='/opt/homebrew/bin/youtube-dl'
+ffmpegCmd='/opt/homebrew/bin/ffmpeg'
+downloadsFolder="/Users/$(whoami)/Downloads"
 
-# ! - Variables - ! #
 
 
+# Check if the correct binaries are installed.
+[[ -f "$YouTubeCmd" ]] || { printf "\nYouTube-DL needs to be installed for this script to run.\nVisit \"https://formulae.brew.sh/formula/youtube-dl\" for more info.\n\n"; exit; }
+[[ -f "$ffmpegCmd" ]] || { printf "\nffmpeg needs to be installed for this script to run.\nVisit \"https://formulae.brew.sh/formula/ffmpeg\" for more info.\n\n"; exit; }
 
-# Check if Youtube-DL is installed.
-[[ -f "$ytdlCmd" ]] && { printf "\nYouTube-DL needs to be installed for this script to run.\nVisit \"https://formulae.brew.sh/formula/youtube-dl\" for more info.\n\n"; exit; }
 
 
 # Check if we have any parameter supplied.
@@ -38,15 +46,14 @@ else
 fi
 
 # Get video title and format it.
-videoTitle=$(/opt/homebrew/bin/youtube-dl -f bestvideo+bestaudio "$videoURL" -o "%(title)s.%(ext)s" --get-title)
+videoTitle=$($YouTubeCmd -f bestvideo+bestaudio "$videoURL" -o "%(title)s.%(ext)s" --get-title)
 videoTitle=$(echo $videoTitle | sed 's/["/]//g')
 
 # Set videoDownload Directory.
-downloadsFolder="/Users/$(whoami)/Downloads"
 videoDirectory="$downloadsFolder/$videoTitle"
 
 # Download the youtube video.
-$('/opt/homebrew/bin/youtube-dl' -k -f bestvideo+bestaudio "$videoURL" -o "$videoDirectory/$videoTitle.%(ext)s") & wait
+$($YouTubeCmd -k -f bestvideo+bestaudio "$videoURL" -o "$videoDirectory/$videoTitle.%(ext)s") #& wait
 
 # Get the videos full title.
 videoFullTitle=$(ls "$videoDirectory" | grep -e "$videoTitle")
@@ -54,17 +61,17 @@ videoFullTitle=$(ls "$videoDirectory" | grep -e "$videoTitle")
 # Check if the video is already an MP4 file, if not then convert it to one.
 if test $(ls "$videoDirectory" | grep -E "$videoTitle" | wc -l) -eq 2; then
     echo "Two files need combining: $(ls "$videoDirectory" | head -1) and $(ls "$videoDirectory" | tail -1)"
-    '/opt/homebrew/bin/ffmpeg' -i "$videoDirectory/$(ls "$videoDirectory" | head -1)" -i "$videoDirectory/$(ls "$videoDirectory" | tail -1)" "$videoDirectory/$videoTitle.mp4" & wait
+    $ffmpegCmd -i "$videoDirectory/$(ls "$videoDirectory" | head -1)" -i "$videoDirectory/$(ls "$videoDirectory" | tail -1)" "$videoDirectory/$videoTitle.mp4" #& wait
 elif [[ -f "$videoDirectory/$videoTitle.mp4" ]]; then
     var=''
 else
-    '/opt/homebrew/bin/ffmpeg' -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" & wait
+    $ffmpegCmd -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" #& wait
 fi
 
 # Move the MP4 video file to the Downloads folder.
-/bin/mv "$videoDirectory/$videoTitle.mp4" "$downloadsFolder/$videoTitle.mp4" & wait
+/bin/mv "$videoDirectory/$videoTitle.mp4" "$downloadsFolder/$videoTitle.mp4" #& wait
 
 # Remove the directory with any undeleted files.
-# /bin/rm -dr "$videoDirectory" & wait
+/bin/rm -dr "$videoDirectory" #& wait
 
 echo Done
