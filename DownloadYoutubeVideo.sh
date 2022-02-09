@@ -68,6 +68,8 @@ else
     "$ffmpegCmd" -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" #& wait
 fi
 
+sleep 1
+
 # Move the MP4 video file to the Downloads folder.
 /bin/mv "$videoDirectory/$videoTitle.mp4" "$downloadsFolder" #& wait
 echo "$videoDirectory/$videoTitle.mp4" "$downloadsFolder"
