@@ -51,10 +51,13 @@ $($YouTubeCmd -k -f bestvideo+bestaudio "$videoURL" -o "$videoDirectory/$videoTi
 # Get the videos full title.
 videoFullTitle=$(ls "$videoDirectory" | grep -e "$videoTitle")
 
+
 # Check if the video is already an MP4 file, if not then convert it to one.
 if test $(ls "$videoDirectory" | grep -E "$videoTitle" | wc -l) -eq 2; then
-    echo "Two files need combining: $(ls "$videoDirectory" | head -1) and $(ls "$videoDirectory" | tail -1)"
-    $ffmpegCmd -i "$videoDirectory/$(ls "$videoDirectory" | head -1)" -i "$videoDirectory/$(ls "$videoDirectory" | tail -1)" "$videoDirectory/$videoTitle.mp4" #& wait
+    fileA=$(ls "$videoDirectory" | head -1)
+    fileB=$(ls "$videoDirectory" | tail -1)
+    echo "Two files need combining: $fileA and $fileB"
+    $ffmpegCmd -i "$videoDirectory/$fileA" -i "$videoDirectory/$fileB" "$videoDirectory/$videoTitle.mp4" #& wait
 elif [[ -f "$videoDirectory/$videoTitle.mp4" ]]; then
     var=''
 else
