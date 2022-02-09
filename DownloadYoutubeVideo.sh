@@ -46,7 +46,7 @@ videoDirectory="$downloadsFolder/$videoTitle"
 echo 45
 
 # Download the youtube video.
-VideoDownload=$( $YouTubeCmd -f bestvideo+bestaudio "$videoURL" --no-playlist -o "$videoDirectory/$videoTitle.%(ext)s" ) #& wait
+VideoDownload=$($YouTubeCmd -f bestvideo+bestaudio "$videoURL" --no-playlist -o "$videoDirectory/$videoTitle.%(ext)s") #& wait
 
 echo 50
 
