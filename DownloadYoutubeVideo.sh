@@ -35,9 +35,9 @@ fi
 
 
 # Get video title and format it.
-videoTitle=$("$YouTubeCmd" -f bestvideo+bestaudio "$videoURL" --no-playlist -o "%(title)s.%(ext)s" --get-title)
-videoTitle=$(echo $videoTitle | sed 's/["/]//g')
-videoTitle=$(echo $videoTitle | sed "s/[']//g")
+videoTitle=$( "$YouTubeCmd" -f bestvideo+bestaudio "$videoURL" --no-playlist -o "%(title)s.%(ext)s" --get-title )
+videoTitle=$( echo $videoTitle | sed 's/["/]//g' )
+videoTitle=$( echo $videoTitle | sed "s/[.']//g" )
 
 
 # Set video directory.
@@ -51,15 +51,15 @@ VideoDownload=$( $YouTubeCmd -f bestvideo+bestaudio "$videoURL" --no-playlist -o
 echo 50
 
 # Get the videos full title.
-videoFullTitle=$(ls "$videoDirectory" | grep -e "$videoTitle")
+videoFullTitle=$( ls "$videoDirectory" | grep -e "$videoTitle" )
 
 echo 55
 
 # Check if the video is already an MP4 file, if not then convert it to one.
-if test $(ls "$videoDirectory" | grep -E "$videoTitle" | wc -l) -eq 2; then
+if test $( ls "$videoDirectory" | grep -E "$videoTitle" | wc -l ) -eq 2; then
     echo IF
-    fileA=$(ls "$videoDirectory" | head -1) # Get the name of the first file.
-    fileB=$(ls "$videoDirectory" | tail -1) # Get the name of the second file.
+    fileA=$( ls "$videoDirectory" | head -1 ) # Get the name of the first file.
+    fileB=$( ls "$videoDirectory" | tail -1 ) # Get the name of the second file.
     # echo "Two files need combining: $fileA and $fileB"
     "$ffmpegCmd" -i "$videoDirectory/$fileA" -i "$videoDirectory/$fileB" "$videoDirectory/$videoTitle.mp4" #& wait
 elif [[ -f "$videoDirectory/$videoTitle.mp4" ]]; then
@@ -71,7 +71,12 @@ fi
 sleep 1
 
 # Move the MP4 video file to the Downloads folder.
-'/bin/mv' "$videoDirectory/$videoTitle.mp4" "$downloadsFolder" #& wait
+Temp=$( ls "$videoDirectory" | grep '^[^.]*.[^.]*$' )
+echo $Temp
+
+exit
+
+/bin/mv "$videoDirectory/$videoTitle.mp4" "$downloadsFolder" #& wait
 echo "$videoDirectory/$videoTitle.mp4" "$downloadsFolder"
 
 # Remove the directory with any undeleted files.
