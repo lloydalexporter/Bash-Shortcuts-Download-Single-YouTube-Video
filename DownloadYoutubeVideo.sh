@@ -35,7 +35,7 @@ fi
 
 
 # Get video title and format it.
-videoTitle=$($YouTubeCmd -f bestvideo+bestaudio "$videoURL" -o "%(title)s.%(ext)s" --get-title)
+videoTitle=$("$YouTubeCmd" -f bestvideo+bestaudio "$videoURL" -o "%(title)s.%(ext)s" --get-title)
 videoTitle=$(echo $videoTitle | sed 's/["/]//g')
 videoTitle=$(echo $videoTitle | sed "s/[']//g")
 
@@ -46,7 +46,7 @@ videoDirectory="$downloadsFolder/$videoTitle"
 echo 45
 
 # Download the youtube video.
-$($YouTubeCmd -k -f bestvideo+bestaudio "$videoURL" -o "$videoDirectory/$videoTitle.%(ext)s") #& wait
+$("$YouTubeCmd" -k -f bestvideo+bestaudio "$videoURL" -o "$videoDirectory/$videoTitle.%(ext)s") #& wait
 
 echo 50
 
