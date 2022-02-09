@@ -43,25 +43,29 @@ videoTitle=$(echo $videoTitle | sed "s/[']//g")
 # Set videoDownload Directory.
 videoDirectory="$downloadsFolder/$videoTitle"
 
+echo 45
 
 # Download the youtube video.
 $($YouTubeCmd -k -f bestvideo+bestaudio "$videoURL" -o "$videoDirectory/$videoTitle.%(ext)s") #& wait
 
+echo 50
 
 # Get the videos full title.
 videoFullTitle=$(ls "$videoDirectory" | grep -e "$videoTitle")
 
+echo 55
 
 # Check if the video is already an MP4 file, if not then convert it to one.
 if test $(ls "$videoDirectory" | grep -E "$videoTitle" | wc -l) -eq 2; then
+    echo IF
     fileA=$(ls "$videoDirectory" | head -1) # Get the name of the first file.
     fileB=$(ls "$videoDirectory" | tail -1) # Get the name of the second file.
     # echo "Two files need combining: $fileA and $fileB"
-    $ffmpegCmd -i "$videoDirectory/$fileA" -i "$videoDirectory/$fileB" "$videoDirectory/$videoTitle.mp4" #& wait
+    "$ffmpegCmd" -i "$videoDirectory/$fileA" -i "$videoDirectory/$fileB" "$videoDirectory/$videoTitle.mp4" #& wait
 elif [[ -f "$videoDirectory/$videoTitle.mp4" ]]; then
     var=''
 else
-    $ffmpegCmd -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" #& wait
+    "$ffmpegCmd" -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" #& wait
 fi
 
 # Move the MP4 video file to the Downloads folder.
@@ -69,6 +73,6 @@ fi
 echo "$videoDirectory/$videoTitle.mp4" "$downloadsFolder"
 
 # Remove the directory with any undeleted files.
-# /bin/rm -dr "$videoDirectory" #& wait
+#/bin/rm -dr "$videoDirectory" #& wait
 
 # echo Done
