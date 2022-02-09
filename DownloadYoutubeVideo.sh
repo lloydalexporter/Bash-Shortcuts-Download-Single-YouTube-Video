@@ -53,13 +53,18 @@ echo 50
 # Check if the video is already an MP4 file, if not then convert it to one.
 if test $( ls "$videoDirectory" | grep -E "$videoTitle" | wc -l ) -eq 2; then
     echo IF
+    exit
     fileA=$( ls "$videoDirectory" | head -1 ) # Get the name of the first file.
     fileB=$( ls "$videoDirectory" | tail -1 ) # Get the name of the second file.
     # echo "Two files need combining: $fileA and $fileB"
     "$ffmpegCmd" -i "$videoDirectory/$fileA" -i "$videoDirectory/$fileB" "$videoDirectory/$videoTitle.mp4" #& wait
 elif [[ -f "$videoDirectory/$videoTitle.mp4" ]]; then
+    echo ELIF
+    exit
     var=''
 else
+    echo ELSE
+    exit
     videoFullTitle=$( ls "$videoDirectory" | grep -e "$videoTitle" )
     "$ffmpegCmd" -i "$videoDirectory/$videoFullTitle" "$videoDirectory/$videoTitle.mp4" #& wait
 fi
